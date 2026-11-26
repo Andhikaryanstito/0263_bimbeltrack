@@ -1,65 +1,62 @@
 # 0263_bimbeltrack
 
 > **BimbelTrack: Sistem Informasi Penjadwalan & Manajemen Sesi Bimbingan Belajar Siswa**  
-> Proyek Ujian Akhir Semester Mata Kuliah Pengembangan Aplikasi Mobile (PAM) 2026  
+> Proyek Tugas Akhir Mata Kuliah Pengembangan Aplikasi Mobile (PAM) 2026  
 > **NIM:** 20240150263  
 > **Akun GitHub:** [@Andhikaryanstito](https://github.com/Andhikaryanstito)  
-> **Kelas:** PAM  
+> **API Repository:** [0263_API_bimbeltrack](https://github.com/Andhikaryanstito/0263_API_bimbeltrack)  
 
 ---
 
-## ?? Deskripsi Proyek
-**BimbelTrack** adalah aplikasi bimbingan belajar akademik berbasis Android native (**Jetpack Compose**, **MVVM**) yang terintegrasi dengan REST API backend MySQL. Aplikasi ini mendigitalkan pencatatan sesi les dan presensi belajar siswa, serta memfasilitasi komunikasi akademik antara dua role pengguna:
+## 1. Deskripsi Proyek
+**BimbelTrack** adalah aplikasi bimbingan belajar akademik berbasis Android native (**Kotlin, Jetpack Compose, MVVM**) yang terintegrasi dengan layanan REST API backend **PostgreSQL**. Aplikasi ini mendigitalkan pencatatan sesi bimbingan dan presensi belajar siswa, serta memfasilitasi interaksi akademik antara dua peran pengguna:
 
-1. **Role Siswa:** Memilih program bimbingan belajar, menentukan jadwal sesi bimbingan dengan tentor, memantau kehadiran sesi, serta melihat riwayat E-Rapor perkembangan belajar.
-2. **Role Tentor:** Mengatur ketersediaan jadwal mengajar, mencatat kehadiran sesi les (Hadir, Izin, Alpa), serta menginput nilai latihan kuis (skor 0�100) dan catatan evaluasi belajar siswa.
+1. **Role Siswa:** Melihat dan mencari program bimbingan belajar, melihat profil serta jadwal ketersediaan tentor, memesan jadwal sesi bimbingan, mengubah atau membatalkan jadwal, melihat riwayat presensi serta evaluasi nilai latihan, dan mengunduh lembar perkembangan belajar (PDF).
+2. **Role Tentor:** Mengelola daftar program bimbingan, mengatur jadwal ketersediaan mengajar, menyetujui atau membatalkan sesi masuk, mencatat kehadiran siswa (Hadir, Izin, Alpa), mengisi nilai latihan serta catatan evaluasi, dan mengunduh laporan rekapitulasi sesi mengajar (PDF).
 
 ---
 
-## ??? Pemenuhan Rubrik Penilaian PAM 2026
+## 2. Arsitektur & Pemenuhan Rubrik PAM 2026
 
 | No | Kategori Rubrik | Implementasi pada BimbelTrack | Status |
-|:--:|:---|:---|:--:|
-| 1 | **Authentication** | Login & Register dengan JWT (Access Token & Refresh Token) | ?? Sedang Disiapkan |
-| 2 | **Authorization** | 2 Level Role: **Siswa** (Katalog, Booking, Rapor) & **Tentor** (Presensi, Penilaian) | ? Terstruktur |
-| 3 | **Navigasi & Routing** | Multi-page app murni menggunakan **Navigation Compose** (`Screen.kt`) | ? Terimplementasi |
-| 4 | **State Management** | Arsitektur **MVVM** (Model-View-ViewModel + StateFlow) | ? Terstruktur |
-| 5 | **Tabel / Entitas Data** | 4 Entitas Relasional MySQL: `ProgramBimbel`, `ProfilTentor`, `JadwalSesi`, `CatatanEvaluasi` | ? Model Terdefinisi |
-| 6 | **5 Fitur CRUDS** | **Create:** Booking Sesi & Input Nilai<br>**Read:** Jadwal Belajar & E-Rapor<br>**Update:** Presensi Kehadiran Sesi<br>**Delete:** Pembatalan Jadwal Sesi<br>**Search:** Pencarian Katalog Program Belajar | ?? Sedang Berjalan |
-| 7 | **REST API Integration** | HTTP Client Retrofit2/Ktor dengan serialisasi JSON ke server database | ? Tahap Berikutnya |
-| 8 | **Database** | Database server MySQL (*Zero Room Database sesuai aturan pedoman*) | ? Tahap Berikutnya |
-| 9 | **File Storage** | Simpan dan baca file lokal: Export rekapitulasi laporan perkembangan belajar siswa (PDF) | ? Tahap Berikutnya |
-| 10 | **UI/UX** | Antarmuka matang murni dengan Jetpack Compose Material 3 | ?? On Progress |
+|:--:|:---|:---|:---:|
+| 1 | **Authentication** | Login & Register dengan JWT (Access Token & Refresh Token) | :hourglass_flowing_sand: Terjadwal (Minggu 3) |
+| 2 | **Authorization** | 2 Level Peran: **Siswa** & **Tentor** (Role-Based UI) | :white_check_mark: Rute Terstruktur |
+| 3 | **Navigasi & Routing** | Multi-page app murni menggunakan **Navigation Compose** (`Screen.kt`) | :white_check_mark: Kerangka Siap |
+| 4 | **State Management** | Arsitektur **MVVM** (Model-View-ViewModel) | :white_check_mark: Struktur Siap |
+| 5 | **Tabel / Entitas Data** | 4 Entitas Relasional PostgreSQL: `ProgramBimbel`, `ProfilTentor`, `JadwalSesi`, `CatatanEvaluasi` | :white_check_mark: Model Terdefinisi |
+| 6 | **5 Fitur CRUDS** | Create, Read, Update, Delete, dan Search terintegrasi pada kedua peran | :hourglass_flowing_sand: Tahap Implementasi |
+| 7 | **REST API & Database** | HTTP Client ke backend `0263_API_bimbeltrack` dengan **PostgreSQL** (tanpa Room DB) | :hourglass_flowing_sand: Tahap Implementasi |
+| 8 | **File Storage** | Simpan dan baca berkas laporan PDF perkembangan belajar & rekap sesi di perangkat | :hourglass_flowing_sand: Terjadwal |
+| 9 | **UI/UX** | Antarmuka murni menggunakan **Jetpack Compose** Material 3 | :hourglass_flowing_sand: Tahap Implementasi |
 
 ---
 
-## ?? Struktur Direktori Proyek (MVVM Architecture)
+## 3. Struktur Direktori Proyek (MVVM)
 
 ```text
 com.example.a0263_bimbeltrack/
-+-- data/
-�   +-- model/         # 4 Entitas Utama (ProgramBimbel, ProfilTentor, JadwalSesi, CatatanEvaluasi)
-�   +-- remote/        # Konfigurasi Retrofit API Service & DTO
-�   +-- repository/    # Repository penghubung data remote dengan ViewModel
-+-- ui/
-�   +-- components/    # Komponen Reusable Jetpack Compose (Button, Card, Dialog)
-�   +-- navigation/    # Rute dan Graph Navigasi Compose (Screen.kt)
-�   +-- screens/       # Halaman antarmuka untuk role Siswa dan Tentor
-�   +-- theme/         # Material Theme (Color, Typography, Shape)
-+-- MainActivity.kt    # Entry point aplikasi
+├── data/
+│   ├── model/         # 4 Entitas Utama (ProgramBimbel, ProfilTentor, JadwalSesi, CatatanEvaluasi)
+│   ├── remote/        # Konfigurasi Retrofit API Service & DTO
+│   └── repository/    # Repository penghubung data REST API dengan ViewModel
+├── ui/
+│   ├── components/    # Komponen reusable Jetpack Compose
+│   ├── navigation/    # Rute dan graph Navigation Compose (Screen.kt)
+│   ├── screens/       # Halaman antarmuka untuk peran Siswa dan Tentor
+│   └── theme/         # Material Theme (Color, Typography, Shape)
+└── MainActivity.kt    # Entry point aplikasi
 ```
 
 ---
 
-## ?? Log Progress Mingguan (Pertemuan 9 - 16)
+## 4. Progress Mingguan (Weekly Progress)
 
-| Minggu / Pertemuan | Rincian Aktivitas & File yang Dikerjakan | Commit Terkait | Status |
-|:---|:---|:---|:--:|
-| **Pertemuan 9** | � Inisialisasi awal proyek Android murni Jetpack Compose.<br>� Pembuatan struktur paket folder arsitektur MVVM (`data/`, `ui/`). | `5ae2c49`<br>`e245f37` | ? Selesai |
-| **Pertemuan 10** | � Pembuatan data class 4 entitas utama (`ProgramBimbel`, `ProfilTentor`, `JadwalSesi`, `CatatanEvaluasi`).<br>� Perancangan rute navigasi `Screen.kt` untuk role Siswa & Tentor.<br>� Dokumentasi resmi spesifikasi proyek pada `README.md`. | `a3d21ac`<br>`ec9d057`<br>`[Current]` | ? Selesai |
-| **Pertemuan 11** | Konfigurasi Retrofit REST API Client, Data Transfer Object (DTO), dan autentikasi login/register JWT. | - | ? Terjadwal |
-| **Pertemuan 12** | Implementasi antarmuka dan logika Siswa: Katalog program, fitur pencarian/filter, dan booking sesi bimbingan (Create & Read). | - | ? Terjadwal |
-| **Pertemuan 13** | Implementasi antarmuka dan logika Tentor: Daftar sesi mengajar, pencatatan presensi kehadiran, dan input nilai kuis (Update). | - | ? Terjadwal |
-| **Pertemuan 14** | Implementasi pembatalan jadwal sesi (Delete) dan fitur File Storage lokal (Unduh & Baca Dokumen Rapor Belajar PDF). | - | ? Terjadwal |
-| **Pertemuan 15** | UI/UX Polish, validasi form input, penanganan error jaringan/koneksi API, dan pembersihan bug fatal. | - | ? Terjadwal |
-| **Pertemuan 16** | Verifikasi kepatuhan SRS, penyusunan dokumentasi teknis akhir, dan persiapan demo aplikasi tugas akhir. | - | ? Terjadwal |
+Berikut adalah linimasa pengembangan proyek **BimbelTrack** berdasarkan riwayat git commit secara bertahap:
+
+### :date: Minggu 1 / Pertemuan 9 (16 November 2026 - 22 November 2026)
+* **Inisiasi & Setup Proyek** ( `5ae2c49` , `e245f37` ): Initial commit proyek Android Jetpack Compose, konfigurasi `.gitignore`, Gradle Kotlin DSL, serta penataan kerangka struktur folder arsitektur MVVM (`data/model`, `data/remote`, `data/repository`, `ui/components`, `ui/navigation`, `ui/screens`).
+* **Model Entitas & Rute Navigasi Awal** ( `a3d21ac` , `ec9d057` , `3dd44f8` ): Pembuatan 4 data class entitas utama (`ProgramBimbel`, `ProfilTentor`, `JadwalSesi`, `CatatanEvaluasi`), penyiapan rute dasar `Screen.kt` berbasis Navigation Compose untuk peran Siswa serta Tentor, dan dokumentasi awal `README.md`.
+
+### :date: Minggu 2 / Pertemuan 10 (23 November 2026 - 29 November 2026)
+* **Sinkronisasi Dokumentasi & Persiapan Backend** ( *commit ini* ): Penyelarasan spesifikasi basis data **PostgreSQL**, penautan repositori backend `0263_API_bimbeltrack`, serta pembaruan format catatan progress mingguan pada `README.md` selama tahap finalisasi dokumen SRS.
