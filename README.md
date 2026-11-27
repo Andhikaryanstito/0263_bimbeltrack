@@ -20,13 +20,13 @@
 
 | No | Kategori Rubrik | Implementasi pada BimbelTrack | Status |
 |:--:|:---|:---|:---:|
-| 1 | **Authentication** | Login & Register dengan JWT (Access Token & Refresh Token) | :hourglass_flowing_sand: Terjadwal (Minggu 3) |
+| 1 | **Authentication** | Login & Register dengan JWT (Access Token & Refresh Token) | :hourglass_flowing_sand: Model & Endpoint Siap |
 | 2 | **Authorization** | 2 Level Peran: **Siswa** & **Tentor** (Role-Based UI) | :white_check_mark: Rute Terstruktur |
 | 3 | **Navigasi & Routing** | Multi-page app murni menggunakan **Navigation Compose** (`Screen.kt`) | :white_check_mark: Kerangka Siap |
 | 4 | **State Management** | Arsitektur **MVVM** (Model-View-ViewModel) | :white_check_mark: Struktur Siap |
-| 5 | **Tabel / Entitas Data** | 4 Entitas Relasional PostgreSQL: `ProgramBimbel`, `ProfilTentor`, `JadwalSesi`, `CatatanEvaluasi` | :white_check_mark: Model Terdefinisi |
+| 5 | **Tabel / Entitas Data** | 4 Entitas Relasional PostgreSQL: `ProgramBimbel`, `ProfilTentor`, `JadwalSesi`, `CatatanEvaluasi` + `User` | :white_check_mark: Selaras dengan SRS |
 | 6 | **5 Fitur CRUDS** | Create, Read, Update, Delete, dan Search terintegrasi pada kedua peran | :hourglass_flowing_sand: Tahap Implementasi |
-| 7 | **REST API & Database** | HTTP Client ke backend `0263_API_bimbeltrack` dengan **PostgreSQL** (tanpa Room DB) | :hourglass_flowing_sand: Tahap Implementasi |
+| 7 | **REST API & Database** | HTTP Client ke backend `0263_API_bimbeltrack` dengan **PostgreSQL** (tanpa Room DB) | :hourglass_flowing_sand: Endpoint Terdefinisi |
 | 8 | **File Storage** | Simpan dan baca berkas laporan PDF perkembangan belajar & rekap sesi di perangkat | :hourglass_flowing_sand: Terjadwal |
 | 9 | **UI/UX** | Antarmuka murni menggunakan **Jetpack Compose** Material 3 | :hourglass_flowing_sand: Tahap Implementasi |
 
@@ -37,8 +37,8 @@
 ```text
 com.example.a0263_bimbeltrack/
 ├── data/
-│   ├── model/         # 4 Entitas Utama (ProgramBimbel, ProfilTentor, JadwalSesi, CatatanEvaluasi)
-│   ├── remote/        # Konfigurasi Retrofit API Service & DTO
+│   ├── model/         # Model User & 4 Entitas Utama (ProgramBimbel, ProfilTentor, JadwalSesi, CatatanEvaluasi)
+│   ├── remote/        # Daftar endpoint REST API (ApiEndpoints.kt) & HTTP Client
 │   └── repository/    # Repository penghubung data REST API dengan ViewModel
 ├── ui/
 │   ├── components/    # Komponen reusable Jetpack Compose
@@ -55,8 +55,11 @@ com.example.a0263_bimbeltrack/
 Berikut adalah linimasa pengembangan proyek **BimbelTrack** berdasarkan riwayat git commit secara bertahap:
 
 ### :date: Minggu 1 / Pertemuan 9 (16 November 2026 - 22 November 2026)
-* **Inisiasi & Setup Proyek** ( `5ae2c49` , `e245f37` ): Initial commit proyek Android Jetpack Compose, konfigurasi `.gitignore`, Gradle Kotlin DSL, serta penataan kerangka struktur folder arsitektur MVVM (`data/model`, `data/remote`, `data/repository`, `ui/components`, `ui/navigation`, `ui/screens`).
-* **Model Entitas & Rute Navigasi Awal** ( `a3d21ac` , `ec9d057` , `3dd44f8` ): Pembuatan 4 data class entitas utama (`ProgramBimbel`, `ProfilTentor`, `JadwalSesi`, `CatatanEvaluasi`), penyiapan rute dasar `Screen.kt` berbasis Navigation Compose untuk peran Siswa serta Tentor, dan dokumentasi awal `README.md`.
+* **Inisiasi & Setup Proyek** ( `5ae2c49` , `e245f37` ): Initial commit proyek Android Jetpack Compose, konfigurasi `.gitignore`, Gradle Kotlin DSL, serta penataan kerangka struktur folder arsitektur MVVM.
+* **Model Entitas & Rute Navigasi Awal** ( `a3d21ac` , `ec9d057` , `3dd44f8` ): Pembuatan 4 data class entitas utama, penyiapan rute dasar `Screen.kt` berbasis Navigation Compose untuk peran Siswa serta Tentor, dan dokumentasi awal `README.md`.
 
-### :date: Minggu 2 / Pertemuan 10 (23 November 2026 - 29 November 2026)
-* **Sinkronisasi Dokumentasi & Persiapan Backend** ( *commit ini* ): Penyelarasan spesifikasi basis data **PostgreSQL**, penautan repositori backend `0263_API_bimbeltrack`, serta pembaruan format catatan progress mingguan pada `README.md` selama tahap finalisasi dokumen SRS.
+### :date: Minggu 2 / Pertemuan 10 (23 November 2026 - 26 November 2026)
+* **Sinkronisasi Dokumentasi & Persiapan Backend** ( `97594ea` ): Penyelarasan spesifikasi basis data **PostgreSQL**, penautan repositori backend `0263_API_bimbeltrack`, serta pembaruan format catatan progress mingguan selama tahap finalisasi dokumen SRS.
+
+### :date: Minggu 3 / Pertemuan 11 (27 November 2026 - 3 Desember 2026)
+* **Penyelarasan Model Data & Konfigurasi Endpoint API** ( `bd9f255` , `1e7fa16` ): Pembaruan `ProfilTentor.kt` (menghapus field rating dan menambahkan `userId` serta `jadwalKetersediaan` agar selaras dengan SRS & ERD), penambahan model `User.kt` (`AuthResponse` JWT), serta pembuatan daftar konstanta endpoint di `ApiEndpoints.kt`.
